@@ -6,6 +6,8 @@
   --accent: #7fa2dc;        /* kostyumingizning ko'k rangi (ochiqroq) */
   --accent-text: #92b2e8;   /* "Anvarov" so'zi rangi */
   --on-accent: #101a2e;     /* asosiy tugma ichidagi yozuv */
+  --accent-light: #b4cbf2;  /* gradientning ochiq uchi */
+  --glass: rgba(255, 255, 255, .06);
   --nav-bg: rgba(63, 62, 66, .86);
 }
 
@@ -18,6 +20,8 @@
   --accent: #8a4b1f;
   --accent-text: #c8431d;
   --on-accent: #f7efe3;
+  --accent-light: #b8693a;
+  --glass: rgba(43, 33, 24, .04);
   --nav-bg: rgba(247, 239, 227, .88);
 }
 
@@ -29,6 +33,13 @@ body {
   color: var(--text);
   line-height: 1.6;
 }
+/* Lenis (yumshoq aylantirish) uchun tavsiya etilgan qoidalar */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
 main { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 24px 24px; }
 p { color: var(--muted); font-size: 17px; }
 
@@ -71,18 +82,6 @@ p { color: var(--muted); font-size: 17px; }
 }
 .nav-links a:hover { color: var(--text); background: var(--line); }
 .nav-links a.active { color: var(--accent-text); }
-.nav-cta {
-  background: var(--accent);
-  color: var(--on-accent);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 999px;
-  white-space: nowrap;
-  transition: opacity .15s;
-}
-.nav-cta:hover { opacity: .85; }
 
 /* Mavzu almashtirgich (menyu ichida) */
 .theme-toggle {
@@ -177,20 +176,62 @@ h1 {
 }
 .roles a:hover { border-color: var(--accent); }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn {
-  flex: 1 1 200px;
-  text-align: center;
+/* Premium aloqa tugmalari: ikonka, kichik yozuv va katta raqam/nik */
+.contact-btn {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 240px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px 12px 12px;
+  border-radius: 16px;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 14px 20px;
-  border-radius: 8px;
-  border: 1px solid var(--accent);
-  transition: opacity .15s;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
-.btn:hover { opacity: .8; }
-.btn.primary { background: var(--accent); color: var(--on-accent); }
-.btn.secondary { color: var(--accent); }
+.contact-btn:hover { transform: translateY(-3px); }
+
+.contact-btn.primary {
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  color: var(--on-accent);
+  box-shadow: 0 16px 32px -16px var(--accent), inset 0 1px 0 rgba(255, 255, 255, .4);
+}
+.contact-btn.primary:hover { box-shadow: 0 22px 38px -16px var(--accent), inset 0 1px 0 rgba(255, 255, 255, .5); }
+/* Ustiga kelganda yengil porlash o'tadi */
+.contact-btn.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .38) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform .7s ease;
+  pointer-events: none;
+}
+.contact-btn.primary:hover::after { transform: translateX(120%); }
+
+.contact-btn.secondary {
+  background: var(--glass);
+  color: var(--text);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.contact-btn.secondary:hover { border-color: var(--accent); box-shadow: 0 16px 30px -18px var(--accent); }
+
+.cb-icon {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
+.contact-btn.primary .cb-icon { background: rgba(255, 255, 255, .3); color: var(--on-accent); }
+.contact-btn.secondary .cb-icon { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-text); }
+.cb-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.cb-text small { display: block; font-size: 12px; letter-spacing: .02em; opacity: .78; line-height: 1.3; }
+.cb-text strong { display: block; font-size: 17px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; line-height: 1.35; }
 .note { margin-top: 16px; font-size: 15px; }
 
 /* ---------- Bo'limlar (umumiy) ---------- */
@@ -224,19 +265,33 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 20px;
   overflow: hidden;
-  transition: border-color .2s;
+  /* GSAP transform va translate xususiyatlarini o'zi boshqaradi, shuning uchun ko'tarilishni "top" bilan qilamiz */
+  position: relative;
+  top: 0;
+  transition: border-color .2s, top .2s ease, box-shadow .2s ease;
 }
-.card:hover, .review:hover { border-color: var(--accent); }
-.work-img {
-  aspect-ratio: 4 / 3;
+.card:hover, .review:hover {
+  border-color: var(--accent);
+  top: -4px;
+  box-shadow: 0 14px 28px -16px rgba(0, 0, 0, .45);
+}
+.work-icon {
+  aspect-ratio: 16 / 9;
   display: grid;
   place-items: center;
-  background: var(--line);
-  border-bottom: 1px dashed var(--accent);
-  color: var(--muted);
-  font-size: 13px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  color: var(--accent-text);
+  background:
+    radial-gradient(ellipse at 50% 55%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
+    var(--line);
+}
+.work-icon svg {
+  width: 64px;
+  height: 64px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .card-body { padding: 20px; }
 .card h3 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 6px; }
@@ -286,14 +341,20 @@ footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line);
 @media (max-width: 700px) {
   main { padding: 0 16px 24px; }
   .nav-inner { padding: 0 12px; gap: 8px; }
-  .nav-brand, .nav-cta { display: none; }
-  /* Havolalar sig'masa, yon tomonga surib ko'rsa bo'ladi */
-  .nav-links { margin-right: auto; overflow-x: auto; scrollbar-width: none; }
+  .nav-brand { display: none; }
+  /* Havolalar ixcham: to'rttasi ham mavzu tugmasi bilan yonma-yon sig'adi.
+     Juda tor ekranda sig'masa, yon tomonga surib ko'rsa bo'ladi (tugma ustiga chiqmaydi). */
+  .nav-links { flex: 1; min-width: 0; gap: 0; overflow-x: auto; scrollbar-width: none; }
   .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { font-size: 13px; padding: 8px 7px; }
   .section, .services { margin-top: 72px; }
 }
 @media (max-width: 800px) {
   .cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  .nav-inner { padding: 0 8px; gap: 4px; }
+  .nav-links a { font-size: 12.5px; padding: 8px 5px; }
 }
 @media (max-width: 600px) {
   .service { grid-template-columns: 1fr; gap: 8px; padding: 36px 0; }

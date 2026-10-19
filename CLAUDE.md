@@ -14,7 +14,7 @@
 
 ## Texnik chegaralar
 - Faqat 3 ta alohida fayl: `index.html`, `style.css`, `script.js`. CSS va JS ni HTML ichiga yozma.
-- Kutubxona, framework va build vositalari yo'q. Oddiy HTML, CSS, JS.
+- Framework va build vositalari yo'q. Faqat 3 ta kutubxonaga ruxsat: GSAP, ScrollTrigger (animatsiya) va Lenis (yumshoq aylantirish), CDN orqali, aniq versiya bilan. Boshqalar yo'q, qolgani oddiy HTML, CSS, JS.
 - Rasm: `foto.webp`. Netlify uchun fayllar `netlify-yuklash/` papkasida yig'iladi.
 
 ## Ish qoidalari
@@ -22,4 +22,5 @@
 - Kichik qadamlar bilan ishla: bir vaqtda bitta o'zgarish.
 - Aytganim tushunarsiz bo'lsa, taxmin qilma, sodda tilda savol ber.
 - Fayllarni o'chirma yoki ustiga yozma, avval so'ra. Internetga yuklashdan oldin ham so'ra.
+- GitHub'ga (commit va push) har o'zgarishdan keyin darrov yuklama. Faqat oxirgi o'zgarishdan keyin, men "tayyor" degach yukla.
 - Parol, kalit va token hech qachon fayllarga yozilmasin.

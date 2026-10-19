@@ -1,0 +1,22 @@
+# Parol va kalitlar: hech qachon GitHub'ga chiqmasin
+.env
+.env.*
+*.pem
+*.key
+
+# Netlify uchun vaqtinchalik nusxalar (asl fayllar allaqachon repoda)
+netlify-yuklash/
+netlify-yuklash.zip
+.netlify/
+
+# Claude Code ning mahalliy sozlamalari
+.claude/
+
+# Kutubxonalar va jurnallar
+node_modules/
+*.log
+
+# Kompyuter chiqindilari
+.DS_Store
+Thumbs.db
+desktop.ini

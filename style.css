@@ -1,0 +1,169 @@
+:root {
+  --bg: #3f3e42;            /* rasmning fon rangi bilan bir xil */
+  --text: #f4f4f2;          /* ko'ylagingizning oq rangi */
+  --muted: #b8b7bd;         /* fonning sovuq kulrang tusi */
+  --line: rgba(255, 255, 255, .16);
+  --accent: #7fa2dc;        /* kostyumingizning ko'k rangi (ochiqroq) */
+  --accent-text: #92b2e8;   /* "Anvarov" so'zi rangi */
+  --on-accent: #101a2e;     /* asosiy tugma ichidagi yozuv */
+}
+
+/* Yorug' mavzu */
+:root[data-theme="light"] {
+  --bg: #f7efe3;
+  --text: #2b2118;
+  --muted: #7a6b5c;
+  --line: #e6d9c6;
+  --accent: #8a4b1f;
+  --accent-text: #c8431d;
+  --on-accent: #f7efe3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  line-height: 1.6;
+}
+main { width: 100%; max-width: 980px; }
+.layout {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  grid-template-areas: "top photo" "bottom photo";
+  column-gap: 56px;
+  align-content: center;
+}
+.info { max-width: 520px; }
+.info.top { grid-area: top; align-self: end; }
+.info.bottom { grid-area: bottom; align-self: start; }
+
+/* Hero surat uchun joy */
+.photo {
+  grid-area: photo;
+  align-self: center;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px dashed var(--accent);
+  border-radius: 24px;
+  background: var(--line);
+  display: grid;
+  place-items: center;
+}
+.photo .ph { color: var(--muted); font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo.has-photo { border: none; background: transparent; }
+:root[data-theme="light"] .photo.has-photo { border: 1px solid var(--line); }
+
+/* Mavzu almashtirgich */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 10;
+  transition: border-color .15s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.label {
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: clamp(48px, 11vw, 76px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.accent {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent-text);
+}
+p { color: var(--muted); font-size: 17px; }
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.roles a {
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s;
+}
+.roles a:hover { border-color: var(--accent); }
+.roles a {
+  font-size: 14px;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  flex: 1 1 200px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  transition: opacity .15s;
+}
+.btn:hover { opacity: .8; }
+.btn.primary { background: var(--accent); color: var(--on-accent); }
+.btn.secondary { color: var(--accent); }
+.note { margin-top: 16px; font-size: 15px; }
+@media (max-width: 800px) {
+  /* Telefonda tartib: matn → tugmalar → rasm */
+  .layout { grid-template-columns: 1fr; grid-template-areas: "top" "bottom" "photo"; row-gap: 32px; }
+  .info.top .roles { margin-bottom: 0; }
+  .photo { max-width: 300px; width: 100%; margin: 0 auto; }
+}
+/* Xizmatlar: har biri alohida section */
+html { scroll-behavior: smooth; }
+.services { margin-top: 96px; }
+.service {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 24px;
+}
+.service .num { font-size: 14px; font-weight: 600; color: var(--accent); padding-top: 10px; }
+.service h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 12px; }
+.service p { max-width: 560px; }
+@media (max-width: 600px) {
+  .service { grid-template-columns: 1fr; gap: 8px; padding: 36px 0; }
+  .service .num { padding-top: 0; }
+}
+
+footer { margin-top: 48px; font-size: 13px; color: var(--muted); }

@@ -6,6 +6,7 @@
   --accent: #7fa2dc;        /* kostyumingizning ko'k rangi (ochiqroq) */
   --accent-text: #92b2e8;   /* "Anvarov" so'zi rangi */
   --on-accent: #101a2e;     /* asosiy tugma ichidagi yozuv */
+  --nav-bg: rgba(63, 62, 66, .86);
 }
 
 /* Yorug' mavzu */
@@ -17,26 +18,97 @@
   --accent: #8a4b1f;
   --accent-text: #c8431d;
   --on-accent: #f7efe3;
+  --nav-bg: rgba(247, 239, 227, .88);
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
   line-height: 1.6;
 }
-main { width: 100%; max-width: 980px; }
+main { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 24px 24px; }
+p { color: var(--muted); font-size: 17px; }
+
+/* ---------- Yopishib turuvchi menyu ---------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-brand {
+  margin-right: auto;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.nav-links a:hover { color: var(--text); background: var(--line); }
+.nav-links a.active { color: var(--accent-text); }
+.nav-cta {
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: opacity .15s;
+}
+.nav-cta:hover { opacity: .85; }
+
+/* Mavzu almashtirgich (menyu ichida) */
+.theme-toggle {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+
+/* ---------- Hero ---------- */
 .layout {
   display: grid;
   grid-template-columns: 1.15fr .85fr;
   grid-template-areas: "top photo" "bottom photo";
   column-gap: 56px;
   align-content: center;
+  min-height: calc(100vh - 64px);
+  padding: 32px 0;
 }
 .info { max-width: 520px; }
 .info.top { grid-area: top; align-self: end; }
@@ -66,24 +138,6 @@ main { width: 100%; max-width: 980px; }
 .photo.has-photo { border: none; background: transparent; }
 :root[data-theme="light"] .photo.has-photo { border: 1px solid var(--line); }
 
-/* Mavzu almashtirgich */
-.theme-toggle {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 10;
-  transition: border-color .15s;
-}
-.theme-toggle:hover { border-color: var(--accent); }
 .label {
   font-size: 12px;
   letter-spacing: .14em;
@@ -104,7 +158,6 @@ h1 {
   font-weight: 400;
   color: var(--accent-text);
 }
-p { color: var(--muted); font-size: 17px; }
 .roles {
   display: flex;
   flex-wrap: wrap;
@@ -116,15 +169,13 @@ p { color: var(--muted); font-size: 17px; }
 .roles a {
   color: inherit;
   text-decoration: none;
-  transition: border-color .15s;
-}
-.roles a:hover { border-color: var(--accent); }
-.roles a {
   font-size: 14px;
   padding: 6px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
+  transition: border-color .15s;
 }
+.roles a:hover { border-color: var(--accent); }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .btn {
   flex: 1 1 200px;
@@ -141,29 +192,110 @@ p { color: var(--muted); font-size: 17px; }
 .btn.primary { background: var(--accent); color: var(--on-accent); }
 .btn.secondary { color: var(--accent); }
 .note { margin-top: 16px; font-size: 15px; }
-@media (max-width: 800px) {
-  /* Telefonda tartib: matn → tugmalar → rasm */
-  .layout { grid-template-columns: 1fr; grid-template-areas: "top" "bottom" "photo"; row-gap: 32px; }
-  .info.top .roles { margin-bottom: 0; }
-  .photo { max-width: 300px; width: 100%; margin: 0 auto; }
+
+/* ---------- Bo'limlar (umumiy) ---------- */
+.services, .section, .service { scroll-margin-top: 72px; }
+.section { margin-top: 96px; }
+.section-head { margin-bottom: 32px; }
+.title {
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.15;
 }
-/* Xizmatlar: har biri alohida section */
-html { scroll-behavior: smooth; }
+
+/* ---------- Xizmatlar: har biri alohida section ---------- */
 .services { margin-top: 96px; }
+.services > .section-head { margin-bottom: 0; }
 .service {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 24px;
   padding: 48px 0;
   border-top: 1px solid var(--line);
-  scroll-margin-top: 24px;
 }
 .service .num { font-size: 14px; font-weight: 600; color: var(--accent); padding-top: 10px; }
 .service h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 12px; }
 .service p { max-width: 560px; }
+
+/* ---------- Ishlarim va Mijozlar fikri: kartalar ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card, .review {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.card:hover, .review:hover { border-color: var(--accent); }
+.work-img {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  background: var(--line);
+  border-bottom: 1px dashed var(--accent);
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.card-body { padding: 20px; }
+.card h3 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 6px; }
+.card p { font-size: 15px; }
+.review { padding: 24px; }
+.review p { font-size: 16px; color: var(--text); }
+.review .who { margin-top: 16px; font-size: 14px; color: var(--muted); }
+.sample-tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+}
+
+/* ---------- Savol-javob ---------- */
+.faq { border-bottom: 1px solid var(--line); }
+.faq details { border-top: 1px solid var(--line); padding: 20px 0; }
+.faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 18px;
+  font-weight: 500;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; flex: none; font-size: 24px; color: var(--accent); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 12px; max-width: 640px; }
+
+footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+
+/* ---------- Telefon ---------- */
+@media (max-width: 800px) {
+  /* Hero tartibi: matn → tugmalar → rasm */
+  .layout { grid-template-columns: 1fr; grid-template-areas: "top" "bottom" "photo"; row-gap: 32px; min-height: 0; padding-top: 40px; }
+  .info.top .roles { margin-bottom: 0; }
+  .photo { max-width: 300px; width: 100%; margin: 0 auto; }
+}
+@media (max-width: 700px) {
+  main { padding: 0 16px 24px; }
+  .nav-inner { padding: 0 12px; gap: 8px; }
+  .nav-brand, .nav-cta { display: none; }
+  /* Havolalar sig'masa, yon tomonga surib ko'rsa bo'ladi */
+  .nav-links { margin-right: auto; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .section, .services { margin-top: 72px; }
+}
+@media (max-width: 800px) {
+  .cards { grid-template-columns: 1fr; }
+}
 @media (max-width: 600px) {
   .service { grid-template-columns: 1fr; gap: 8px; padding: 36px 0; }
   .service .num { padding-top: 0; }
 }
-
-footer { margin-top: 48px; font-size: 13px; color: var(--muted); }

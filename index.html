@@ -8,7 +8,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Mavzuni almashtirish"></button>
+  <!-- Yopishib turuvchi menyu: scroll qilganda ham tepada ko'rinib turadi -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="#">Sirojiddin Anvarov</a>
+      <nav class="nav-links" aria-label="Bo'limlar">
+        <a href="#xizmatlar">Xizmatlar</a>
+        <a href="#ishlarim">Ishlarim</a>
+        <a href="#fikrlar">Fikrlar</a>
+        <a href="#savol-javob">Savol-javob</a>
+      </nav>
+      <a class="nav-cta" href="tel:+998990063363">Bog'lanish</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Mavzuni almashtirish"></button>
+    </div>
+  </header>
 
   <main>
     <div class="layout">
@@ -42,7 +55,11 @@
       </figure>
     </div>
 
-    <div class="services">
+    <div class="services" id="xizmatlar">
+      <div class="section-head">
+        <h2 class="title">Xizmatlar</h2>
+      </div>
+
       <section class="service" id="sotuvchi">
         <span class="num">01</span>
         <div>
@@ -67,6 +84,85 @@
         </div>
       </section>
     </div>
+
+    <!-- Ishlarim: o'rinbosar. Rasm o'rniga o'z rasmingizni qo'ying, nom va izohni tahrirlang -->
+    <section class="section" id="ishlarim">
+      <div class="section-head">
+        <h2 class="title">Ishlarim</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="work-img">Rasm o'rni</div>
+          <div class="card-body">
+            <h3>Ehtiyot qismlar tanlash</h3>
+            <p>Mashinangizga mos igna, chelnok, tasma va boshqa qismlarni topib berish.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="work-img">Rasm o'rni</div>
+          <div class="card-body">
+            <h3>Mashinani sozlash</h3>
+            <p>Ip tortilishi, tikish sifati va mashina ishlashini to'g'ri sozlash.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="work-img">Rasm o'rni</div>
+          <div class="card-body">
+            <h3>Nosozlikni topish</h3>
+            <p>Mashina nega to'xtayotganini aniqlab, qaysi qism kerakligini tushuntirish.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Mijozlar fikri: NAMUNA matnlar. Haqiqiy mijozlar fikri bilan almashtiring, keyin "Namuna" yozuvini olib tashlang -->
+    <section class="section" id="fikrlar">
+      <div class="section-head">
+        <h2 class="title">Mijozlar <span class="accent">fikri</span></h2>
+      </div>
+      <div class="cards">
+        <blockquote class="review">
+          <span class="sample-tag">Namuna</span>
+          <p>Bu yerga mijozning haqiqiy fikri yoziladi. Masalan, qismni qanchalik tez topib berganingiz haqida.</p>
+          <div class="who">Mijoz ismi</div>
+        </blockquote>
+        <blockquote class="review">
+          <span class="sample-tag">Namuna</span>
+          <p>Bu yerga ikkinchi mijozning fikri yoziladi. Masalan, maslahat yoki ta'mir haqida.</p>
+          <div class="who">Mijoz ismi</div>
+        </blockquote>
+        <blockquote class="review">
+          <span class="sample-tag">Namuna</span>
+          <p>Bu yerga uchinchi mijozning fikri yoziladi. Masalan, xizmat sifati haqida.</p>
+          <div class="who">Mijoz ismi</div>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Savol-javob: bosilganda javob ochiladi (JS kerak emas) -->
+    <section class="section" id="savol-javob">
+      <div class="section-head">
+        <h2 class="title">Savol-<span class="accent">javob</span></h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Qaysi qism mening mashinamga mosligini qanday bilaman?</summary>
+          <p>Mashinangizning markasi va modelini yoki eski qismning rasmini Telegramda yuboring. Mosini aniqlashga yordam beraman.</p>
+        </details>
+        <details>
+          <summary>Qismni o'zim o'rnata olamanmi?</summary>
+          <p>Oddiy qismlarni ko'pincha o'zingiz almashtira olasiz. Qiyin bo'lsa yoki ishonchingiz komil bo'lmasa, qanday o'rnatishni maslahat beraman.</p>
+        </details>
+        <details>
+          <summary>Mashinamning nosozligini qanday aniqlayman?</summary>
+          <p>Nima bo'layotganini yozib yuboring: ip uzilyaptimi, tikish tushib qolyaptimi yoki ovoz o'zgarganmi. Sababini birga topamiz.</p>
+        </details>
+        <details>
+          <summary>Siz bilan qanday bog'lanaman?</summary>
+          <p>Telefon: +998 99 006 33 63. Telegram: @Tikuvpro. Savolingizni yozing, javob beraman.</p>
+        </details>
+      </div>
+    </section>
 
     <footer>© <span id="year">2026</span> Sirojiddin Anvarov</footer>
   </main>

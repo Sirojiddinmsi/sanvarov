@@ -94,8 +94,12 @@ document.addEventListener('click', function (e) {
 // ---------- Fade Up: elementlar ekranga kirganda pastdan ko'tarilib paydo bo'ladi ----------
 // Yashirish GSAP ichida bo'ladi: kutubxona yuklanmasa, hamma narsa ko'rinib turaveradi.
 if (hasGsap) {
-  var fadeTargets = document.querySelectorAll(
-    '.info.top > *, .info.bottom > *, .photo, .section-head, .service, .card, .review, .faq details, footer'
+  // Savol-javob bo'limi animatsiyasiz: telefonda sarlavha va savollar yashirinib qolmasligi uchun
+  var fadeTargets = Array.prototype.filter.call(
+    document.querySelectorAll(
+      '.info.top > *, .info.bottom > *, .photo, .section-head, .service, .card, .review, footer'
+    ),
+    function (el) { return !el.closest('#savol-javob'); }
   );
 
   gsap.set(fadeTargets, { opacity: 0, y: 24 });
@@ -145,7 +149,6 @@ function animateHeight(item, from, to, done) {
     item.style.overflow = '';
     item._anim = null;
     if (done) done();
-    if (hasGsap) ScrollTrigger.refresh();   // balandlik o'zgardi: animatsiya joylarini yangilaymiz
   };
 }
 
